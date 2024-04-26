@@ -1,0 +1,97 @@
+﻿
+
+
+<div class="wrapper">
+
+    <div class="flex flex-col">
+
+        <label class="text-5xl font-bold dark:text-zinc-200">@(new DateTime(CurrentYear, CurrentMonth, 1).ToString("yyyy"))</label>
+        <label class="text-3xl text-zinc-700 dark:text-zinc-300">@(new DateTime(CurrentYear, CurrentMonth, 1).ToString("MMMM"))</label>
+
+    </div>
+
+    <header>
+        <div class="mt-3 flex gap-3">
+
+            <button @onclick="Before" class="h-5 w-5 bg-transparent">
+                <svg class="h-full w-full fill-zinc-600 dark:fill-zinc-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" /></svg>
+            </button>
+
+            <button @onclick="After" class="h-5 w-5 bg-transparent">
+                <svg class="h-full w-full fill-zinc-600 dark:fill-zinc-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" /></svg>
+                </button>
+
+        </div>
+    </header>
+
+
+    <div class="calendar mt-3">
+
+        <ul class="weeks rounded-lg bg-zinc-100 p-1 text-zinc-500 dark:bg-zinc-900 dark:text-zinc-400">
+            <li>DO</li>
+            <li>LU</li>
+            <li>MA</li>
+            <li>MI</li>
+            <li>JU</li>
+            <li>VI</li>
+            <li>SA</li>
+        </ul>
+
+        <ul class="days">
+
+            @{
+                int firstDayOfMonth = new DateTime(CurrentYear, CurrentMonth, 1).DayOfWeek.GetHashCode();
+                int lastDateOfMonth = DateTime.DaysInMonth(CurrentYear, CurrentMonth);
+                int lastDayOfMonth = new DateTime(CurrentYear, CurrentMonth, lastDateOfMonth).DayOfWeek.GetHashCode();
+                int lastDateOfLastMonth = (new DateTime(CurrentYear, CurrentMonth, 1)).AddDays(-1).Day;
+
+                int c = 0;
+            }
+
+            
+            @for (int i = firstDayOfMonth; i > 0; i--)
+            {
+                c++;
+                var lastMonth = (new DateOnly(CurrentYear, CurrentMonth, 1)).AddMonths(-1);
+
+                @* Tiempo. *@
+                var time = new DateTime(lastMonth.Year, lastMonth.Month, lastDateOfLastMonth - i + 1);
+
+                @* Control. *@
+                <Day OnClick="OnClick" Value="time" Style="2" />
+
+            }
+
+            @for (int i = 1; i <= lastDateOfMonth; i++)
+            {
+                c++;
+                @* Tiempo. *@
+                var time = new DateTime(CurrentYear, CurrentMonth, i);
+
+                var filter = Events.Where(t =>
+                {
+                    var actual = new DateTime(t.DateStart.Year, t.DateStart.Month, t.DateStart.Day);
+                    return actual == time;
+                });
+
+                var have = filter.Any();
+
+                @* Control. *@
+                <Day OnClick="OnClick" Value="time" Style="((time == Today) ? 1 :  time == Selected ? 3 : 0)" Exist="have" />
+
+            }
+
+             @for (int i = 1; i < (42 - c +1 ); i++)
+            {
+                <li class="group flex items-center justify-center">
+                    <div class="flex h-9 w-9 items-center justify-center rounded-full text-gray-400 group-hover:bg-gray-100 dark:group-hover:bg-current-500/20">
+                        @(i)
+                    </div>
+                </li>
+
+            }
+
+        </ul>
+    </div>
+
+</div>

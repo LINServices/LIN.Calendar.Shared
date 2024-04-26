@@ -1,0 +1,51 @@
+﻿@code{
+
+
+    [Parameter]
+    public DateTime Value { get; set; }
+
+    [Parameter]
+    public Action<DateTime?> OnClick { get; set; } = default!;
+
+    [Parameter]
+    public int Style {get;set;}
+
+    [Parameter]
+    public bool Exist { get; set; }
+
+    string GetWithStyle()
+    {
+
+        switch (Style)
+        {
+            // Hoy.
+            case 1:
+                return "bg-current-500 group-hover:bg-current-600 text-white group-hover:bg-current-500 dark:group-hover:bg-current-500/30";
+            // Hidden.
+            case 2:
+                return "text-zinc-400 group-hover:bg-gray-100 dark:group-hover:bg-current-500/30";
+            // Seleccionado.
+            case 3:
+                return "bg-zinc-200 group-hover:bg-zinc-300 text-black dark:bg-zinc-800 dark:text-zinc-100 dark:group-hover:bg-current-500/30";
+            // Normal.
+            default:
+                return " text-black dark:text-zinc-200 group-hover:bg-gray-100 dark:group-hover:bg-current-500/30";
+        }
+
+    }
+
+}
+
+
+<li @onclick="()=>OnClick(Value)" class="group flex items-center justify-center">
+    <div class="@GetWithStyle() flex h-10 w-10 flex-col items-center justify-center rounded-full transition-colors duration-300 ease-in-out">
+        <span class="text-base">@Value.Day</span>
+
+        @if (Exist)
+        {
+            <div class="flex items-center justify-center">
+                <div class="h-2 w-2 rounded-full @(Style == 1 ? "bg-white":"bg-current-500")"></div>
+            </div>
+        }
+    </div>
+</li>

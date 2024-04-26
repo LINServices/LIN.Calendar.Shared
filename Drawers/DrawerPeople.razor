@@ -1,0 +1,84 @@
+﻿@inject IJSRuntime JS
+
+<!-- drawer component -->
+<div id="@_id" class="z-40 fixed right-0 top-0 h-dvh max-h-dvh w-80 min-w-80 translate-x-full transition-transform" tabindex="-1" aria-labelledby="drawer-bottom-label">
+
+    <div class="flex h-full w-full flex-col justify-between rounded-l-xl bg-white p-4 dark:bg-zinc-800 lg:max-w-lg">
+
+
+        @* Header. *@
+        <div class="mt-5 flex w-full flex-col items-center justify-center">
+
+            <svg class="h-10 w-10 fill-current-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z" /></svg>
+
+            <label class="mt-2 text-xl font-bold dark:text-white">Nuevo Evento</label>
+
+        </div>
+
+        @* Componentes. *@
+        <div class="flex-1 UIScroll mt-2 gap-3 overflow-y-auto p-1">
+
+
+
+            @* Entrada de nombre *@
+            <div>
+                <label for="" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Nombre
+                </label>
+                <input @bind="EventModel.Nombre" type="text" autocomplete="off" required=""
+                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
+            </div>
+
+
+            <div class="mt-3">
+                <label for="email" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Tipo de evento
+                </label>
+                <select @bind="Type" id="countries" class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
+                    <option value="0">Evento</option>
+                    <option value="1">Cumpleaños</option>
+                    <option value="2">Aniversario</option>
+                    <option value="3">Reunion</option>
+                </select>
+            </div>
+
+
+
+            <label class="mt-3 inline-flex cursor-pointer items-center">
+                <input type="checkbox" @bind="EventModel.IsAllDay" class="peer sr-only">
+                <div class="peer relative h-6 w-11 rounded-full bg-gray-200 after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:bg-gray-700 dark:border-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-current-300 peer-checked:bg-current-600 dark:peer-focus:ring-current-800 peer-checked:after:translate-x-full peer-checked:after:border-white rtl:peer-checked:after:-translate-x-full"></div>
+                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Todo el dia</span>
+            </label>
+
+
+
+            <div class="mt-3">
+                <label for="" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Fecha
+                </label>
+                <input @bind="EventModel.DateStart" type="text" autocomplete="off" required=""
+                       class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
+            </div>
+
+            @if (!EventModel.IsAllDay)
+            {
+                <div class="mt-3">
+                    <label for="" class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Fecha Final
+                    </label>
+                    <input @bind="EventModel.EndStart" type="text" autocomplete="off" required=""
+                           class="block w-full appearance-none rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-gray-900 placeholder-gray-400 focus:ring-1 focus:border-current-500 focus:bg-white focus:outline-none focus:ring-current-500 dark:bg-zinc-900 dark:text-zinc-200 dark:border-zinc-700 sm:text-sm dark:focus:bg-zinc-900">
+                </div>
+            }
+
+
+        </div>
+
+        @* Botón Aceptar. *@
+        <div class="mb-2 mt-2 flex w-full items-end justify-center self-end">
+            <button @onclick="Create" id="btn-close-panel-ide" type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Aceptar</button>
+        </div>
+
+    </div>
+
+</div>

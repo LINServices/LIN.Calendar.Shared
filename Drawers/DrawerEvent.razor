@@ -1,0 +1,116 @@
+﻿@inject IJSRuntime JS
+
+<!-- drawer component -->
+<div id="@_id" class="z-40 fixed right-0 top-0 h-dvh max-h-dvh w-80 min-w-80 translate-x-full transition-transform" tabindex="-1" aria-labelledby="drawer-bottom-label">
+
+    <div class="flex h-full w-full flex-col justify-between rounded-l-xl bg-white p-4 dark:bg-zinc-800 lg:max-w-lg">
+
+        @{
+            var x = GetClass();
+        }
+
+        @* Header. *@
+        <div class="mt-5 flex w-full flex-col items-center justify-center">
+
+
+            <div class="flex w-full items-center">
+
+                <div class="@x.Item1 h-16 w-1.5 rounded"></div>
+
+                <div class="ml-4 flex flex-col justify-center">
+
+                    <label class="@x.Item2 text-sm">@EventModel.Type.ToString()</label>
+                    <label class="text-xl font-bold dark:text-zinc-200">@EventModel.Nombre</label>
+
+                </div>
+
+            </div>
+
+
+            <div class="mt-4 flex w-full flex-col rounded-lg border border-zinc-400 p-4 dark:border-zinc-600">
+
+                <div class="flex">
+
+                    <div class="h-8 w-8 rounded-full bg-current-200 p-2 dark:bg-current-500/30">
+                        <svg class="h-full w-full fill-current-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M464 256A208 208 0 1 1 48 256a208 208 0 1 1 416 0zM0 256a256 256 0 1 0 512 0A256 256 0 1 0 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" /></svg>
+                    </div>
+                    @{
+                        var dif = @GetFaltante(EventModel.DateStart, EventModel.EndStart);
+
+                    }
+
+                   
+                   
+
+                    <div class="ml-3 flex flex-col">
+
+
+                        @if (EventModel.IsAllDay)
+                        {
+                            <label class="text-sm font-bold dark:text-zinc-200">@EventModel.DateStart.ToString("dddd") todo el dia</label>
+                        }
+                        else
+                        {
+                            <label class="text-sm font-bold dark:text-zinc-200">@EventModel.DateStart.ToString("dddd, hh:mm tt")</label>
+                        }
+
+                        <div class="flex items-center">
+                            @if (dif.Item1)
+                            {
+                                <div class="mr-1 h-2 w-2 animate-pulse rounded-full bg-green-500">
+                                </div>
+                            }
+                            <label class="-mt-0.5 text-xs font-bold text-current-500">@dif.Item2</label>
+                        </div>
+                       
+                       
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        @* Componentes. *@
+        <div class="flex-1 UIScroll mt-2 gap-3 overflow-y-auto p-1">
+
+            <label class="mt-7 text-xl font-bold dark:text-zinc-200">Invitados</label>
+
+            <div class="flex w-full flex-col py-4">
+
+                @foreach (var member in EventModel.Guests)
+                {
+                    <div class="flex w-full items-center">
+
+                        <div class="relative inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-pink-500 dark:bg-gray-600">
+                            <span class="text-sm font-medium text-white dark:text-gray-300">@Global.Utilities.Strings.GetInitials(member.Profile.Name)</span>
+                        </div>
+
+                        <label class="ml-3 text-sm font-bold dark:text-zinc-300">@(member.Profile.Id == LIN.Access.Calendar.Session.Instance.Informacion.Id ? "Tú" : member.Profile.Name)</label>
+
+                    </div>
+                }
+
+            </div>
+
+
+        </div>
+
+
+        @* Botón Aceptar. *@
+        <div class="mb-2 mt-2 flex w-full items-end justify-center self-end">
+            <div class="flex w-full gap-2">
+                <button @onclick="Delete" id="btn-close-panel-ide-cll2" type="button" class="w-full rounded-lg bg-red-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Eliminar</button>
+
+                <button id="btn-close-panel-ide-cll" type="button" class="w-full rounded-lg bg-current-500 px-3 py-2 text-center text-sm font-medium text-white hover:bg-current-600 focus:ring-4 focus:outline-none focus:ring-current-300 dark:bg-current-600 dark:hover:bg-current-700 dark:focus:ring-current-800">Aceptar</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
