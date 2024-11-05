@@ -12,17 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LIN.Access.Auth" Version="1.3.4" />
+    <PackageReference Include="LIN.Access.Calendar" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\AccesoAPI\LIN.Access.Calendar\LIN.Access.Calendar.csproj" />
-    <ProjectReference Include="..\..\Tipos\LIN.Types.Calendar\LIN.Types.Calendar.csproj" />
-    <ProjectReference Include="..\..\Tipos\LIN.Types\LIN.Types.csproj" />
   </ItemGroup>
 
 </Project>
