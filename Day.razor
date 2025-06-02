@@ -37,8 +37,8 @@
 }
 
 
-<li @onclick="()=>OnClick(Value)" class="group flex items-center justify-center">
-    <div class="@GetWithStyle() flex h-10 w-10 flex-col items-center justify-center rounded-full transition-colors duration-300 ease-in-out">
+<li @onclick="() => OnClick(Value)" class="group flex items-center justify-center aspect-square w-full dl:p-3">
+    <div class="@GetWithStyle() flex h-10 w-10 flex-col items-center justify-center rounded-full transition-colors duration-300 ease-in-out dl:rounded-xl dl:w-full dl:h-full">
         <span class="text-base">@Value.Day</span>
 
         @if (Exist)

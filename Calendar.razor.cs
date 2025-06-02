@@ -82,4 +82,13 @@ public partial class Calendar
     }
 
 
+    void Reset()
+    {
+        var newDate = DateTime.Now;
+        CurrentMonth = newDate.Month;
+        CurrentYear = newDate.Year;
+        StateHasChanged();
+    }
+
+
 }

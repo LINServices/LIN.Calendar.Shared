@@ -9,6 +9,9 @@ namespace LIN.Calendar.Shared.Drawers;
 public partial class DrawerPeople
 {
 
+    TimeOnly Start { get; set; }
+    TimeOnly End { get; set; }
+
 
     int Type = 0;
 
@@ -61,6 +64,12 @@ public partial class DrawerPeople
     {
         EventModel.DateStart = (time == default ? DateTime.Now : time);
         EventModel.EndStart = (time == default ? DateTime.Now : time);
+
+
+        Start = TimeOnly.FromDateTime(DateTime.Now);
+        End = TimeOnly.FromDateTime(DateTime.Now.AddMinutes(30));
+
+
         await JS.InvokeVoidAsync("ShowDrawer", _id, "btn-close-panel-ide");
     }
 
@@ -87,6 +96,8 @@ public partial class DrawerPeople
     {
 
         var actual = EventModel;
+
+
         EventModel = new()
         {
             DateStart = DateTime.Now,
@@ -94,6 +105,13 @@ public partial class DrawerPeople
         };
 
         actual.Type = (Types.Calendar.Enumerations.EventTypes)Type;
+
+
+
+        actual.DateStart = new(actual.DateStart.Year, actual.DateStart.Month, actual.DateStart.Day, Start.Hour, Start.Minute, 1);
+        actual.EndStart = new(actual.EndStart.Year, actual.EndStart.Month, actual.EndStart.Day, End.Hour, End.Minute, 1);
+
+
 
         // Evaluar.
         if (actual.EndStart < actual.DateStart)
